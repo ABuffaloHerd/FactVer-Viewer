@@ -1,7 +1,9 @@
-using Microsoft.Office.Interop.Excel;
 using ExcelDataReader;
 using Newtonsoft.Json;
 using System.Text;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace CSViewer
 {
@@ -14,11 +16,13 @@ namespace CSViewer
         private const int INDEX_CONTENT = 5;
 
         private List<Entry> entries;
+        private List<Entry> filteredEntries;
         public Form1()
         {
             InitializeComponent();
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             entries = new();
+            disableFiltersToolStripMenuItem.Enabled = false;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,14 +68,84 @@ namespace CSViewer
                             string url = reader.GetValue(INDEX_URL)?.ToString();
 
                             List<string> content = new();
-                            content.Append(jsonContent);
-                            entries.Add(new Entry(tag, jsonContent, headline, url));
+                            content.Append(FilterJson(jsonContent));
+                            entries.Add(new Entry(tag, FilterJson(jsonContent), headline, url));
                         }
                     }
                 }
 
                 listBox1.DataSource = entries;
             }
+        }
+
+        string FilterJson(string jsonContent)
+        {
+            string @fixed = jsonContent.Replace('[', ' ');
+            string @fixed2 = @fixed.Replace(']', ' ');
+
+            Regex rgx = new("\\\\n[\"'],\\s");
+            //Regex rgx2 = new("\\\\n\\s"); // newlines fuck off
+            string[] parts = rgx.Split(@fixed2);
+
+            StringBuilder sb = new();
+            foreach(string part in parts)
+            {
+                // newlines fuck off part 2
+                sb.Append(part).Append('\n');
+            }
+            //Console.WriteLine(sb.ToString());
+            return sb.ToString();
+        }
+
+        private void FilterEntries(string filter)
+        {
+            filteredEntries = new List<Entry>();
+            foreach (Entry entry in entries)
+            {
+                if (entry.Tag.Contains(filter))
+                {
+                    filteredEntries.Add(entry);
+                }
+            }
+            listBox1.DataSource = filteredEntries;
+            disableFiltersToolStripMenuItem.Enabled = true;
+        }
+
+        private void DisableFilters()
+        {
+            listBox1.DataSource = entries;
+        }
+
+        private void filterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // ask for filter
+            Form prompt = new Form()
+            {
+                Width = 500,
+                Height = 150,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = "Enter filter string",
+                StartPosition = FormStartPosition.CenterScreen
+            };
+            Label textLabel = new Label() { Left = 50, Top = 20, Text = "Filter" };
+            TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
+            Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 90, DialogResult = DialogResult.OK };
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            prompt.Controls.Add(textBox);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(textLabel);
+            prompt.AcceptButton = confirmation;
+
+            string filter = prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
+            if (filter.Length == 0) return;
+
+            FilterEntries(filter);
+        }
+
+        private void disableFiltersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisableFilters();
+            disableFiltersToolStripMenuItem.Enabled = false;
         }
     }
 }
