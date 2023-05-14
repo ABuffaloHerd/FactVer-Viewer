@@ -36,9 +36,12 @@
             toolStrip1 = new ToolStrip();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
             openToolStripMenuItem = new ToolStripMenuItem();
+            toolStripDropDownButton2 = new ToolStripDropDownButton();
+            filterToolStripMenuItem = new ToolStripMenuItem();
             URLTextBox = new TextBox();
             label4 = new Label();
             contentBox = new RichTextBox();
+            disableFiltersToolStripMenuItem = new ToolStripMenuItem();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -82,7 +85,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton1, toolStripDropDownButton2 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1485, 25);
@@ -105,6 +108,23 @@
             openToolStripMenuItem.Size = new Size(103, 22);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
+            // 
+            // toolStripDropDownButton2
+            // 
+            toolStripDropDownButton2.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton2.DropDownItems.AddRange(new ToolStripItem[] { filterToolStripMenuItem, disableFiltersToolStripMenuItem });
+            toolStripDropDownButton2.Image = (Image)resources.GetObject("toolStripDropDownButton2.Image");
+            toolStripDropDownButton2.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            toolStripDropDownButton2.Size = new Size(45, 22);
+            toolStripDropDownButton2.Text = "View";
+            // 
+            // filterToolStripMenuItem
+            // 
+            filterToolStripMenuItem.Name = "filterToolStripMenuItem";
+            filterToolStripMenuItem.Size = new Size(180, 22);
+            filterToolStripMenuItem.Text = "Filter";
+            filterToolStripMenuItem.Click += filterToolStripMenuItem_Click;
             // 
             // URLTextBox
             // 
@@ -133,6 +153,13 @@
             contentBox.Size = new Size(885, 667);
             contentBox.TabIndex = 5;
             contentBox.Text = "";
+            // 
+            // disableFiltersToolStripMenuItem
+            // 
+            disableFiltersToolStripMenuItem.Name = "disableFiltersToolStripMenuItem";
+            disableFiltersToolStripMenuItem.Size = new Size(180, 22);
+            disableFiltersToolStripMenuItem.Text = "Disable Filters";
+            disableFiltersToolStripMenuItem.Click += disableFiltersToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -167,5 +194,8 @@
         private TextBox URLTextBox;
         private Label label4;
         private RichTextBox contentBox;
+        private ToolStripDropDownButton toolStripDropDownButton2;
+        private ToolStripMenuItem filterToolStripMenuItem;
+        private ToolStripMenuItem disableFiltersToolStripMenuItem;
     }
 }
