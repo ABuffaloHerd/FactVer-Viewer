@@ -84,14 +84,14 @@ namespace CSViewer
             string @fixed2 = @fixed.Replace(']', ' ');
 
             Regex rgx = new("\\\\n[\"'],\\s");
-            //Regex rgx2 = new("\\\\n\\s"); // newlines fuck off
+            Regex rgx2 = new("\\A[\\\"'][0-9]+:\\s"); // newlines fuck off
             string[] parts = rgx.Split(@fixed2);
 
             StringBuilder sb = new();
             foreach(string part in parts)
             {
                 // newlines fuck off part 2
-                sb.Append(part).Append('\n');
+                sb.Append(rgx2.Replace(part, "")).Append('\n');
             }
             //Console.WriteLine(sb.ToString());
             return sb.ToString();
