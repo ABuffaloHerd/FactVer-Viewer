@@ -38,10 +38,13 @@
             openToolStripMenuItem = new ToolStripMenuItem();
             toolStripDropDownButton2 = new ToolStripDropDownButton();
             filterToolStripMenuItem = new ToolStripMenuItem();
+            disableFiltersToolStripMenuItem = new ToolStripMenuItem();
             URLTextBox = new TextBox();
             label4 = new Label();
             contentBox = new RichTextBox();
-            disableFiltersToolStripMenuItem = new ToolStripMenuItem();
+            articleBox = new TextBox();
+            label2 = new Label();
+            copyIDButton = new Button();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -58,7 +61,7 @@
             // headlineTexBox
             // 
             headlineTexBox.BorderStyle = BorderStyle.FixedSingle;
-            headlineTexBox.Location = new Point(568, 27);
+            headlineTexBox.Location = new Point(570, 57);
             headlineTexBox.Name = "headlineTexBox";
             headlineTexBox.ReadOnly = true;
             headlineTexBox.Size = new Size(886, 23);
@@ -67,7 +70,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(508, 30);
+            label1.Location = new Point(510, 60);
             label1.Name = "label1";
             label1.Size = new Size(54, 15);
             label1.TabIndex = 2;
@@ -76,7 +79,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(508, 85);
+            label3.Location = new Point(508, 118);
             label3.Name = "label3";
             label3.Size = new Size(55, 15);
             label3.TabIndex = 2;
@@ -122,14 +125,21 @@
             // filterToolStripMenuItem
             // 
             filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            filterToolStripMenuItem.Size = new Size(180, 22);
+            filterToolStripMenuItem.Size = new Size(146, 22);
             filterToolStripMenuItem.Text = "Filter";
             filterToolStripMenuItem.Click += filterToolStripMenuItem_Click;
+            // 
+            // disableFiltersToolStripMenuItem
+            // 
+            disableFiltersToolStripMenuItem.Name = "disableFiltersToolStripMenuItem";
+            disableFiltersToolStripMenuItem.Size = new Size(146, 22);
+            disableFiltersToolStripMenuItem.Text = "Disable Filters";
+            disableFiltersToolStripMenuItem.Click += disableFiltersToolStripMenuItem_Click;
             // 
             // URLTextBox
             // 
             URLTextBox.BorderStyle = BorderStyle.FixedSingle;
-            URLTextBox.Location = new Point(568, 56);
+            URLTextBox.Location = new Point(570, 86);
             URLTextBox.Name = "URLTextBox";
             URLTextBox.ReadOnly = true;
             URLTextBox.Size = new Size(886, 23);
@@ -138,7 +148,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(508, 59);
+            label4.Location = new Point(510, 89);
             label4.Name = "label4";
             label4.Size = new Size(28, 15);
             label4.TabIndex = 2;
@@ -147,31 +157,56 @@
             // 
             // contentBox
             // 
-            contentBox.Location = new Point(569, 85);
+            contentBox.Location = new Point(569, 115);
             contentBox.Name = "contentBox";
             contentBox.ReadOnly = true;
-            contentBox.Size = new Size(885, 667);
+            contentBox.Size = new Size(887, 637);
             contentBox.TabIndex = 5;
             contentBox.Text = "";
             // 
-            // disableFiltersToolStripMenuItem
+            // articleBox
             // 
-            disableFiltersToolStripMenuItem.Name = "disableFiltersToolStripMenuItem";
-            disableFiltersToolStripMenuItem.Size = new Size(180, 22);
-            disableFiltersToolStripMenuItem.Text = "Disable Filters";
-            disableFiltersToolStripMenuItem.Click += disableFiltersToolStripMenuItem_Click;
+            articleBox.BorderStyle = BorderStyle.FixedSingle;
+            articleBox.Location = new Point(569, 28);
+            articleBox.Name = "articleBox";
+            articleBox.ReadOnly = true;
+            articleBox.Size = new Size(736, 23);
+            articleBox.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(510, 30);
+            label2.Name = "label2";
+            label2.Size = new Size(55, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Article ID";
+            label2.Click += label2_Click_1;
+            // 
+            // copyIDButton
+            // 
+            copyIDButton.Location = new Point(1311, 28);
+            copyIDButton.Name = "copyIDButton";
+            copyIDButton.Size = new Size(145, 23);
+            copyIDButton.TabIndex = 6;
+            copyIDButton.Text = "Copy";
+            copyIDButton.UseVisualStyleBackColor = true;
+            copyIDButton.Click += copyIDButton_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1485, 762);
+            Controls.Add(copyIDButton);
             Controls.Add(contentBox);
             Controls.Add(toolStrip1);
             Controls.Add(label3);
             Controls.Add(label4);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(URLTextBox);
+            Controls.Add(articleBox);
             Controls.Add(headlineTexBox);
             Controls.Add(listBox1);
             Name = "Form1";
@@ -197,5 +232,8 @@
         private ToolStripDropDownButton toolStripDropDownButton2;
         private ToolStripMenuItem filterToolStripMenuItem;
         private ToolStripMenuItem disableFiltersToolStripMenuItem;
+        private TextBox articleBox;
+        private Label label2;
+        private Button copyIDButton;
     }
 }
