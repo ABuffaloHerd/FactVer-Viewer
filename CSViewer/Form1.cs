@@ -161,6 +161,11 @@ namespace CSViewer
 
         private void copyIDButton_Click(object sender, EventArgs e)
         {
+            if(articleBox.Text.Length == 0)
+            {
+                MessageBox.Show("I don't think you want to copy an empty string :|", "Are you sure about that?");
+                return;
+            }
             Clipboard.SetText(articleBox.Text);
         }
     }
