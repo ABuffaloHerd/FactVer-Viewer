@@ -1,9 +1,6 @@
 using ExcelDataReader;
-using Newtonsoft.Json;
 using System.Text;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace CSViewer
 {
@@ -33,6 +30,7 @@ namespace CSViewer
             headlineTexBox.Text = entry.Headline;
             URLTextBox.Text = entry.Url;
             contentBox.Text = entry.Content;
+            articleBox.Text = entry.Tag;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -83,17 +81,25 @@ namespace CSViewer
             string @fixed = jsonContent.Replace('[', ' ');
             string @fixed2 = @fixed.Replace(']', ' ');
 
+            // regexes to clean up the fucked up mess that python scripts produce
             Regex rgx = new("\\\\n[\"'],\\s");
-            //Regex rgx2 = new("\\\\n\\s"); // newlines fuck off
+            Regex rgx2 = new("\\A[\\\"'][0-9]+:\\s");
+            Regex rgx3 = new("\\\\n{0,}");
+            Regex no_newlines = new("\\\\n");
+            Regex fuck_off_leading_1 = new("[\"']1:\\s");
+
             string[] parts = rgx.Split(@fixed2);
 
             StringBuilder sb = new();
-            foreach(string part in parts)
+            foreach (string part in parts)
             {
-                // newlines fuck off part 2
-                sb.Append(part).Append('\n');
+                // remove anything that has the keyword 'adsbygoogle'
+                if (part.Contains("adsbygoogle")) continue; // TODO: is this bogging down the load time?
+
+                string clean = fuck_off_leading_1.Replace(part, "");
+                sb.Append(rgx3.Replace(rgx2.Replace(clean, ""), "")).Append('\n');
             }
-            //Console.WriteLine(sb.ToString());
+
             return sb.ToString();
         }
 
@@ -146,6 +152,21 @@ namespace CSViewer
         {
             DisableFilters();
             disableFiltersToolStripMenuItem.Enabled = false;
+        }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyIDButton_Click(object sender, EventArgs e)
+        {
+            if(articleBox.Text.Length == 0)
+            {
+                MessageBox.Show("I don't think you want to copy an empty string :|", "Are you sure about that?");
+                return;
+            }
+            Clipboard.SetText(articleBox.Text);
         }
     }
 }
