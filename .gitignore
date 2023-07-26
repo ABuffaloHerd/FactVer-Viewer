@@ -367,4 +367,6 @@ AutoGenerateClaims/FactVer1.3.xlsx
 *.pkl
 *.xlsx
 
+env/
+
 AutoGenerateClaims/data/*
